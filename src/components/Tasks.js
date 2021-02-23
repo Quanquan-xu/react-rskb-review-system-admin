@@ -9,9 +9,14 @@ import {
     SelectInput,
     TextInput,
     Create,
+    SimpleForm,
+    Edit,
+    EditButton,
     Filter,} from 'react-admin';
 
 import UrlField from "./MyUrlField";
+import {useStyles} from "./customCss";
+
 
 const TaskFilter = (props) => (
     <Filter {...props}>
@@ -22,19 +27,33 @@ const TaskFilter = (props) => (
     </Filter>
 );
 
-export const Tasks = props => (
-    <List filters={<TaskFilter />} {...props}>
-        <Datagrid rowClick="edit">
-            <TextField source="id" label="taskID"/>
-
-            <ReferenceField source="plan" reference="Plans">
-                <TextField source="planID" label="planID"/>
-            </ReferenceField>
-
-            <TextField source="reviewProgress" label="reviewProgress"/>
-            <TextField source="orderProgress" label="orderProgress"/>
-            <TextField source="finish" label="finish"/>
-            <TextField source="note" label="note"/>
-        </Datagrid>
-    </List>
+export const Tasks = props =>{
+    const classes = useStyles();
+    return (
+        <List filters={<TaskFilter />} {...props}>
+            <Datagrid >
+                <ReferenceField source="plan" reference="Plans" label="planID" link={false}>
+                    <TextField className={classes.referenceColor} source="planID" />
+                </ReferenceField>
+                <ReferenceField source="reviewProgress" reference="ReviewProgresses" label="reviewProgress" link={false}>
+                    <TextField className={classes.referenceColor} source="english" />
+                </ReferenceField>
+                <ReferenceField source="orderProgress" reference="OrderProgresses" label="orderProgress" link={false}>
+                    <TextField className={classes.referenceColor} source="english" />
+                </ReferenceField>
+                <TextField source="finish" label="finish"/>
+                <TextField source="note" label="note"/>
+                <EditButton />
+            </Datagrid>
+        </List>
+    );
+}
+export const TaskEdit = props => (
+    <Edit {...props}>
+        <SimpleForm>
+            <TextInput source="id" />
+            <TextInput source="status" />
+            <TextInput source="note" />
+        </SimpleForm>
+    </Edit>
 );

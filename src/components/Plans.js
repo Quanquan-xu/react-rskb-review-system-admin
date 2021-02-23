@@ -8,6 +8,8 @@ import {
     ReferenceField,
     SelectInput,
     TextInput,
+    SimpleForm,
+    Edit,
     Create,
     Filter,} from 'react-admin';
 
@@ -24,4 +26,23 @@ export const Plans = props => (
             <TextField source="note" label="note"/>
         </Datagrid>
     </List>
+);
+export const PlanEdit = props => (
+    <Edit {...props}>
+        <SimpleForm>
+            <TextInput source="asin" />
+            <TextInput source="planNumber" />
+            <TextInput source="note" />
+        </SimpleForm>
+    </Edit>
+);
+
+export const PlanCreate = props => (
+    <Create {...props}>
+        <SimpleForm>
+            <TextInput source="asin" />
+            <TextInput source="planNumber" />
+            <TextInput multiline source="note" />
+        </SimpleForm>
+    </Create>
 );
